@@ -1,4 +1,4 @@
-import DomainFilter from './DomainFilter.component';
+import DomainFilter from './NewDomainFilter.component';
 import { connect } from 'react-redux'
 import { getDomains } from '../../redux/domains/selectors';
 import { AppState } from '../../redux/store';

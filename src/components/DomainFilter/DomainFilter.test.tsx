@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DomainFilter from './DomainFilter.component';
+import DomainFilter from './NewDomainFilter.component';
 import { render, screen } from '@testing-library/react';
 
 describe('components', () => {
