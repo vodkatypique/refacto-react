@@ -1,11 +1,9 @@
 // This file has to be left untouched
-
-import { createStore } from 'redux'
-
+import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducer'
 
 export type AppState = ReturnType<typeof rootReducer>
 
-export default function configureStore() {
-  return createStore(rootReducer)
-}
+const initializeStore = () => configureStore({reducer: rootReducer});
+
+export default initializeStore;
