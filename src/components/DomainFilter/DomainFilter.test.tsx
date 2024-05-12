@@ -1,14 +1,12 @@
-import React from 'react';
-import { shallow } from 'enzyme';
 import DomainFilter from './DomainFilter.component';
 import { render, screen } from '@testing-library/react';
 
 describe('components', () => {
   describe('DomainFilter', () => {
     it('should allow the user to filter', () => {
-      const wrapper = shallow(<DomainFilter domains={['do']} />);
+      render(<DomainFilter domains={['do']} />);
 
-      expect(wrapper.find('select')).toHaveLength(3);
+      expect(screen.getAllByRole('listbox')).toHaveLength(3);
     })
 
     it('should render', async () => {

@@ -11,14 +11,15 @@
     "@types/node": "^20.12.2",
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
-    "enzyme": "^3.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
     "react-scripts": "5.0.1",
     "typescript": "^5.4.3",
     "web-vitals": "^3.5.2"
+  },
+  "overrides": {
+    "typescript": "^5.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,9 +32,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "devDependencies": {
-    "@types/enzyme": "^3.10.11"
   },
   "browserslist": {
     "production": [
