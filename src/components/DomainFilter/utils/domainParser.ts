@@ -1,3 +1,7 @@
+const removeDuplicates = (array: string[]): string[] => {
+  return Array.from(new Set(array));
+};
+
 export const parseDomain = (domain: string) => {
   const country = domain.substring(0, 2);
   const classification = domain.substring(3, 5);
@@ -6,37 +10,16 @@ export const parseDomain = (domain: string) => {
 };
 
 export const extractDistinctCountries = (domains: string[]): string[] => {
-  const countries: string[] = [];
-  
-  domains.forEach(domain => {
-    const { country } = parseDomain(domain);
-    if (!countries.includes(country)) {
-      countries.push(country);
-    }
-  });
-  return countries;
+  const uniqueDomains = removeDuplicates(domains);
+  return uniqueDomains.map(domain => parseDomain(domain).country);
 };
 
 export const extractDistinctClassifications = (domains: string[]): string[] => {
-  const classifications: string[] = [];
-  domains.forEach(domain => {
-    const { classification } = parseDomain(domain);
-
-    if (!classifications.includes(classification)) {
-      classifications.push(classification);
-    }
-  });
-
-  return classifications;
+  const uniqueDomains = removeDuplicates(domains);
+  return uniqueDomains.map(domain => parseDomain(domain).classification);
 };
 
 export const extractDistinctSubClassifications = (domains: string[]): string[] => {
-  const subClassifications: string[] = [];
-  domains.forEach(domain => {
-    const { subClassification } = parseDomain(domain);
-    if (!subClassifications.includes(subClassification)) {
-      subClassifications.push(subClassification);
-    }
-  });
-  return subClassifications;
+  const uniqueDomains = removeDuplicates(domains);
+  return uniqueDomains.map(domain => parseDomain(domain).subClassification);
 };
