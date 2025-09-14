@@ -8,7 +8,7 @@ export const parseDomain = (domain: string) => {
   const match = domain.match(DOMAIN_REGEX);
   
   if (!match) {
-    return { country: '', classification: '', subClassification: '' };
+    return null;
   }
   
   return {
@@ -19,11 +19,11 @@ export const parseDomain = (domain: string) => {
 };
 
 export const extractAllDistinctValues = (domains: string[]) => {
-  const parsedDomains = domains.map(parseDomain);
+  const parsedDomains = domains.map(parseDomain).filter(domain => domain !== null);
   
   return {
-    countries: removeDuplicates(parsedDomains.map(d => d.country)),
-    classifications: removeDuplicates(parsedDomains.map(d => d.classification)),
-    subClassifications: removeDuplicates(parsedDomains.map(d => d.subClassification))
+    countries: removeDuplicates(parsedDomains.map(d => d!.country)),
+    classifications: removeDuplicates(parsedDomains.map(d => d!.classification)),
+    subClassifications: removeDuplicates(parsedDomains.map(d => d!.subClassification))
   };
 };

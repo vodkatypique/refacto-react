@@ -30,19 +30,11 @@ describe('domainParser', () => {
     });
 
     it('should handle invalid format gracefully', () => {
-      expect(parseDomain('INVALID_FORMAT')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('INVALID_FORMAT')).toBeNull();
     });
 
     it('should handle empty string', () => {
-      expect(parseDomain('')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('')).toBeNull();
     });
 
     it('should parse domain with longer country name', () => {
@@ -86,35 +78,19 @@ describe('domainParser', () => {
     });
 
     it('should reject domain with lowercase letters', () => {
-      expect(parseDomain('us_ok-wok')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('us_ok-wok')).toBeNull();
     });
 
     it('should reject domain with numbers', () => {
-      expect(parseDomain('US1_OK-WOK')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('US1_OK-WOK')).toBeNull();
     });
 
     it('should reject domain with special characters', () => {
-      expect(parseDomain('US_OK-WOK!')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('US_OK-WOK!')).toBeNull();
     });
 
     it('should reject domain with spaces', () => {
-      expect(parseDomain('US OK-WOK')).toEqual({
-        country: '',
-        classification: '',
-        subClassification: ''
-      });
+      expect(parseDomain('US OK-WOK')).toBeNull();
     });
   });
 
@@ -158,6 +134,21 @@ describe('domainParser', () => {
       expect(result.countries).toEqual(['US', 'FRANCE', 'A']);
       expect(result.classifications).toEqual(['OK', 'CLASSIFICATION', 'B', 'CLASSIFICATIONLONGUE']);
       expect(result.subClassifications).toEqual(['WOK', 'SOUSCLASSIFICATION', 'C', 'SOUSCLASSIFICATIONTRESLONGUE']);
+    });
+
+    it('should filter out invalid domains', () => {
+      const domains = [
+        'US_OK-WOK',
+        'INVALID_FORMAT',
+        'FR_NK-WOL',
+        'us_ok-wok',
+        'A_B-C'
+      ];
+      const result = extractAllDistinctValues(domains);
+      
+      expect(result.countries).toEqual(['US', 'FR', 'A']);
+      expect(result.classifications).toEqual(['OK', 'NK', 'B']);
+      expect(result.subClassifications).toEqual(['WOK', 'WOL', 'C']);
     });
   });
 });
