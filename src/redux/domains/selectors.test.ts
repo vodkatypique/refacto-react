@@ -1,12 +1,14 @@
-import { getDomains } from "./selectors";
+import { getDomains, getDomainsInfos } from "./selectors";
 import { AppState } from "../store";
 
 
 describe('selectors', () => {
   const state: AppState = {
     domains: [
-      'SU_PE-RTE',
-      'ST_TE_STT'
+      'US_OK-WOK',
+      'FR_NK-WOL',
+      'FR_OK-NPP',
+      'EN_NK-NRP',
     ]
   }
 
@@ -16,9 +18,30 @@ describe('selectors', () => {
       const domains = getDomains(state);
 
       expect(domains).toEqual([
-        'SU_PE-RTE',
-        'ST_TE_STT'
+        'US_OK-WOK',
+        'FR_NK-WOL',
+        'FR_OK-NPP',
+        'EN_NK-NRP',
       ])
     })
   })
+
+  describe('getDomainsInfo', () => {
+    it('should return all distinct values from domains', () => {
+      const result = getDomainsInfos(state);
+      
+      expect(result.countries).toEqual(['US', 'FR', 'EN']);
+      expect(result.classifications).toEqual(['OK', 'NK']);
+      expect(result.subClassifications).toEqual(['WOK', 'WOL', 'NPP', 'NRP']);
+    });
+
+    it('should return empty arrays for empty domains', () => {
+      const emptyState: AppState = { domains: [] };
+      const result = getDomainsInfos(emptyState);
+      
+      expect(result.countries).toEqual([]);
+      expect(result.classifications).toEqual([]);
+      expect(result.subClassifications).toEqual([]);
+    });
+  });
 })
