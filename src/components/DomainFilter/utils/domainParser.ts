@@ -2,11 +2,20 @@ const removeDuplicates = (array: string[]): string[] => {
   return Array.from(new Set(array));
 };
 
+const DOMAIN_REGEX = /^([A-Z]+)_([A-Z]+)-([A-Z]+)$/;
+
 export const parseDomain = (domain: string) => {
-  const country = domain.substring(0, 2);
-  const classification = domain.substring(3, 5);
-  const subClassification = domain.substring(6);
-  return { country, classification, subClassification };
+  const match = domain.match(DOMAIN_REGEX);
+  
+  if (!match) {
+    return { country: '', classification: '', subClassification: '' };
+  }
+  
+  return {
+    country: match[1],
+    classification: match[2],
+    subClassification: match[3]
+  };
 };
 
 export const extractAllDistinctValues = (domains: string[]) => {
