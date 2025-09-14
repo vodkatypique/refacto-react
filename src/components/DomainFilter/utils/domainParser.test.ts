@@ -1,8 +1,6 @@
 import { 
   parseDomain, 
-  extractDistinctCountries, 
-  extractDistinctClassifications, 
-  extractDistinctSubClassifications 
+  extractAllDistinctValues 
 } from './domainParser';
 
 describe('domainParser', () => {
@@ -32,36 +30,31 @@ describe('domainParser', () => {
     });
   });
 
-  describe('extractDistinctCountries', () => {
-    it('should return empty array for empty input', () => {
-      expect(extractDistinctCountries([])).toEqual([]);
+  describe('extractAllDistinctValues', () => {
+
+    it('should return empty arrays for empty input', () => {
+      const result = extractAllDistinctValues([]);
+      
+      expect(result.countries).toEqual([]);
+      expect(result.classifications).toEqual([]);
+      expect(result.subClassifications).toEqual([]);
     });
 
-    it('should return unique countries without duplicates', () => {
+    it('should return all distinct values without duplicates', () => {
       const domains = ['US_OK-WOK', 'FR_NK-WOL', 'US_BL-NPP', 'FR_OK-WOK'];
-      expect(extractDistinctCountries(domains)).toEqual(['US', 'FR']);
-    });
-  });
-
-  describe('extractDistinctClassifications', () => {
-    it('should return empty array for empty input', () => {
-      expect(extractDistinctClassifications([])).toEqual([]);
+      const result = extractAllDistinctValues(domains);
+      
+      expect(result.countries).toEqual(['US', 'FR']);
+      expect(result.classifications).toEqual(['OK', 'NK', 'BL']);
+      expect(result.subClassifications).toEqual(['WOK', 'WOL', 'NPP']);
     });
 
-    it('should return unique classifications without duplicates', () => {
-      const domains = ['US_OK-WOK', 'FR_NK-WOL', 'US_OK-NPP', 'EN_BL-WOL'];
-      expect(extractDistinctClassifications(domains)).toEqual(['OK', 'NK', 'BL']);
-    });
-  });
-
-  describe('extractDistinctSubClassifications', () => {
-    it('should return empty array for empty input', () => {
-      expect(extractDistinctSubClassifications([])).toEqual([]);
-    });
-
-    it('should return unique sub-classifications without duplicates', () => {
-      const domains = ['US_OK-WOK', 'FR_NK-WOL', 'US_OK-NPP', 'EN_BL-WOL'];
-      expect(extractDistinctSubClassifications(domains)).toEqual(['WOK', 'WOL', 'NPP']);
+    it('should handle single domain', () => {
+      const result = extractAllDistinctValues(['US_OK-WOK']);
+      
+      expect(result.countries).toEqual(['US']);
+      expect(result.classifications).toEqual(['OK']);
+      expect(result.subClassifications).toEqual(['WOK']);
     });
   });
 });

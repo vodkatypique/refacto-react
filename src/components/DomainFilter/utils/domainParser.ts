@@ -9,17 +9,12 @@ export const parseDomain = (domain: string) => {
   return { country, classification, subClassification };
 };
 
-export const extractDistinctCountries = (domains: string[]): string[] => {
-  const uniqueDomains = removeDuplicates(domains);
-  return uniqueDomains.map(domain => parseDomain(domain).country);
-};
-
-export const extractDistinctClassifications = (domains: string[]): string[] => {
-  const uniqueDomains = removeDuplicates(domains);
-  return uniqueDomains.map(domain => parseDomain(domain).classification);
-};
-
-export const extractDistinctSubClassifications = (domains: string[]): string[] => {
-  const uniqueDomains = removeDuplicates(domains);
-  return uniqueDomains.map(domain => parseDomain(domain).subClassification);
+export const extractAllDistinctValues = (domains: string[]) => {
+  const parsedDomains = domains.map(parseDomain);
+  
+  return {
+    countries: removeDuplicates(parsedDomains.map(d => d.country)),
+    classifications: removeDuplicates(parsedDomains.map(d => d.classification)),
+    subClassifications: removeDuplicates(parsedDomains.map(d => d.subClassification))
+  };
 };
