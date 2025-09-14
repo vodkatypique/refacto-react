@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { threadId } from 'worker_threads';
 
 interface State {
   countries: string[],
@@ -16,7 +15,6 @@ const DomainFilter = (props: Props) => {
   const countries: string[] = [];
   const classifications: string[] = [];
   const subClassifications: string[] = [];
-  const s: any = {};
 
   let [state, setState] = useState<State>({
     countries: [],
